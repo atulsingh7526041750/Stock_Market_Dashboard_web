@@ -1,12 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import LoginComponent from './LoginComponent/LoginComponent';
+// import StockDashboard from './StockDashboard/StockDashboard';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>This is my basic stock dashboard</h1>
+    <div className="app">
+      {/* Other components or content */}
+      <LoginComponent />
+      {/* <StockDashboard /> */}
     </div>
   );
-}
+};
 
 export default App;
