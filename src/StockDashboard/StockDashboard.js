@@ -1,8 +1,8 @@
 // StockDashboard.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import StockBarChart from './StockBarChart';
 import './StockDashboard.css';
-
 
 const IEX_CLOUD_API_KEY = 'sk_0f3a1ceb0ea5417480c57fc36bc0f072'; // Replace with your actual API key
 
@@ -24,31 +24,34 @@ const StockDashboard = () => {
     fetchData();
   }, []);
 
+  const chartData = {
+    labels: stockData.map((stock) => stock.quote.symbol),
+    datasets: [
+      {
+        label: 'Latest Price',
+        data: stockData.map((stock) => stock.quote.latestPrice),
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    scales: {
+      x: {
+        indexAxis: 'category',
+      },
+      y: {
+        type: 'linear',
+      },
+    },
+  };
+
   return (
     <div>
       <h1>Stock Market Dashboard</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Company Name</th>
-            <th>Latest Price</th>
-            <th>Change</th>
-            <th>Change Percent</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stockData.map((stock) => (
-            <tr key={stock.quote.symbol}>
-              <td>{stock.quote.symbol}</td>
-              <td>{stock.quote.companyName}</td>
-              <td>{stock.quote.latestPrice}</td>
-              <td>{stock.quote.change}</td>
-              <td>{stock.quote.changePercent}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <StockBarChart chartData={chartData} options={chartOptions} />
     </div>
   );
 };
