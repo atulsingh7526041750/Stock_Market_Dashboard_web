@@ -1,15 +1,17 @@
 // src/LoginComponent/LoginComponent.js
 import React, { useState } from 'react';
 import './LoginComponent.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'flowbite-react';
 
-const LoginComponent = () => {
+// const LoginComponent = () => {
+function LoginComponent() {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate()
 
   const handleLoginClick = () => {
     setIsSignInForm(true);
@@ -42,7 +44,22 @@ const LoginComponent = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (storedUser && storedUser.username === username && storedUser.password === password) {
-      alert('Login successful!');
+      // console.log("is has been called")
+      // setTimeout(()=>{},1000)
+      sessionStorage.setItem('isLoggedIn', true)
+  
+      navigate('/stockDeshboard')
+
+      
+      // console.log("This is data", sessionStorage.getItem('isLoggedIn'))
+
+
+
+      // 
+      // <Link src="/stockDeshboard"></Link>
+      // <a src="/stockDeshboard">click here</a>
+
+      // alert('Login successful!');
       // You can add logic to redirect the user or perform other actions upon successful login.
     } else {
       alert('Invalid credentials. Please try again.');
@@ -122,6 +139,6 @@ const LoginComponent = () => {
       )}
     </div>
   );
-  
-      }
+
+}
 export default LoginComponent;
